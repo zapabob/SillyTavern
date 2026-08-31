@@ -47,6 +47,7 @@ import basicAuthMiddleware from './middleware/basicAuth.js';
 import getWhitelistMiddleware from './middleware/whitelist.js';
 import accessLoggerMiddleware, { getAccessLogPath, migrateAccessLog } from './middleware/accessLogWriter.js';
 import multerMonkeyPatch from './middleware/multerMonkeyPatch.js';
+import { UPLOAD_LIMITS } from './upload-limits.js';
 import initRequestProxy from './request-proxy.js';
 import initPrivateRequestFilter from './private-request-filter.js';
 import cacheBuster from './middleware/cacheBuster.js';
@@ -266,7 +267,10 @@ if (cliArgs.enableCorsProxy) {
 
 // File uploads
 const uploadsPath = path.join(cliArgs.dataRoot, UPLOADS_DIRECTORY);
-app.use(multer({ dest: uploadsPath, limits: { fieldSize: 500 * 1024 * 1024 } }).single('avatar'));
+app.use(multer({
+    dest: uploadsPath,
+    limits: UPLOAD_LIMITS,
+}).single('avatar'));
 app.use(multerMonkeyPatch);
 
 app.get('/version', async function (_, response) {

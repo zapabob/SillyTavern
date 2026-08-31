@@ -6,7 +6,7 @@
 import * as fs from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
-import { imageSize } from 'image-size';
+import { imageSize } from '../image-size.js';
 import writeFileAtomic from 'write-file-atomic';
 import express from 'express';
 import { Jimp } from '../jimp.js';
